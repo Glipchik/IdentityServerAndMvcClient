@@ -1,0 +1,14 @@
+﻿{
+  "profiles": {
+    "Mvc": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "home/index",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:7138"
+    }
+  }
+}
