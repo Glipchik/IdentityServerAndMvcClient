@@ -2,6 +2,8 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using IdentityModel;
+using IdentityServer4;
 using IdentityServer4.Models;
 using System.Collections.Generic;
 
@@ -9,17 +11,23 @@ namespace ISWithJwtTokens.IS
 {
     public static class Config
     {
+        public static IEnumerable<ApiResource> ApiResources =>
+            new ApiResource[]
+            {
+                new ApiResource("SwaggerAPI"),
+            };
+
         public static IEnumerable<IdentityResource> IdentityResources =>
-                   new IdentityResource[]
-                   {
+            new IdentityResource[]
+            {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-                   };
+            };
 
         public static IEnumerable<ApiScope> ApiScopes =>
             new ApiScope[]
             {
-                new ApiScope("scope1"),
+                new ApiScope("SwaggerAPI", "Swagger API DEMO"),
                 new ApiScope("scope2"),
             };
 
@@ -53,6 +61,20 @@ namespace ISWithJwtTokens.IS
                     AllowOfflineAccess = true,
                     AllowedScopes = { "openid", "profile", "scope2" }
                 },
+
+                new Client
+                {
+                    ClientId = "client_id_swagger",
+                    ClientSecrets = { new Secret("client_secret_swagger".ToSha256()) },
+                    AllowedGrantTypes =  GrantTypes.ResourceOwnerPassword,
+                    AllowedCorsOrigins = { "https://localhost:7042" },
+                    AllowedScopes =
+                    {
+                        "SwaggerAPI",
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile
+                    }
+                }
             };
     }
 }
